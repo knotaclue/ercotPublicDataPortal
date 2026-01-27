@@ -1,0 +1,48 @@
+# ERCOT API Query Tool - Git Ignore File
+# This file tells git which files/directories to NOT track
+
+# Environment variables file (contains your secrets!)
+# NEVER commit this file to git
+.env
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environment directories
+venv/
+env/
+ENV/
+.venv
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Output files (you may want to commit these, so adjust as needed)
+output/
+*.json
+!queries/*.json
+
+# Log files
+*.log
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# pytest cache
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
