@@ -1,0 +1,9 @@
+{
+  "endpoint": "np4-190-cd/dam_stlmnt_pnt_prices",
+  "parameters": {
+    "deliveryDateFrom": "2025-01-26",
+    "deliveryDateTo": "2025-01-27",
+    "settlementPoint": "HB_HOUSTON"
+  },
+  "output_file": "output/dam_settlement_houston_jan2025.json"
+}

@@ -1,0 +1,9 @@
+{
+  "endpoint": "np4-190-cd/dam_stlmnt_pnt_prices",
+  "parameters": {
+    "deliveryDateFrom": "2025-01-20",
+    "deliveryDateTo": "2025-01-27",
+    "settlementPoint": "HB_NORTH"
+  },
+  "output_file": "output/settlement_prices_hb_north.json"
+}

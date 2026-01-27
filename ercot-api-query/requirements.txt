@@ -1,0 +1,13 @@
+# Python dependencies for ERCOT API Query Tool
+#
+# Install all dependencies with:
+# pip install -r requirements.txt
+#
+# Or with pip3:
+# pip3 install -r requirements.txt
+
+# HTTP library for making API requests
+requests>=2.31.0
+
+# Load environment variables from .env file
+python-dotenv>=1.0.0
