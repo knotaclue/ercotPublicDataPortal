@@ -30,7 +30,7 @@ ERCOT_SUBSCRIPTION_KEY=your_subscription_key
 ## 3️⃣ Run Your First Query
 
 ```bash
-python3 ercot_query.py --config queries/realtime_system_load.json
+python3 ercot_query.py --config queries/settlement_point_prices.json
 ```
 
 ## 4️⃣ Check the Output
@@ -38,14 +38,14 @@ python3 ercot_query.py --config queries/realtime_system_load.json
 Your data is saved in the `output/` directory!
 
 ```bash
-cat output/system_load_jan2025.json
+cat output/dam_prices_houston.json
 ```
 
 ## 5️⃣ Create Your Own Query
 
 ```bash
 # Copy an existing query
-cp queries/realtime_system_load.json queries/my_query.json
+cp queries/settlement_point_prices.json queries/my_query.json
 
 # Edit it
 nano queries/my_query.json

@@ -124,13 +124,13 @@ Each query is defined in a JSON file in the `queries/` directory. Here's the str
 
 ```json
 {
-  "endpoint": "/api/v1/your_endpoint",
+  "endpoint": "np4-190-cd/dam_stlmnt_pnt_prices",
   "parameters": {
     "deliveryDateFrom": "2025-01-01",
     "deliveryDateTo": "2025-01-27",
-    "anyOtherParameter": "value"
+    "settlementPoint": "HB_HOUSTON"
   },
-  "output_file": "output/your_output_file.json"
+  "output_file": "output/dam_prices_houston.json"
 }
 ```
 
@@ -145,22 +145,22 @@ Each query is defined in a JSON file in the `queries/` directory. Here's the str
 
 Three example configurations are included:
 
-1. **realtime_system_load.json** - Query actual system load data
-2. **settlement_point_prices.json** - Query settlement point prices with specific location
-3. **wind_power_production.json** - Query wind power production by region
+1. **settlement_point_prices.json** - DAM settlement point prices for trading hubs
+2. **realtime_lmp.json** - Real-time locational marginal prices
+3. **spp_15min.json** - 15-minute settlement point prices
 
 ## 🎯 Usage
 
 ### Basic Usage
 
 ```bash
-python3 ercot_query.py --config queries/realtime_system_load.json
+python3 ercot_query.py --config queries/settlement_point_prices.json
 ```
 
-### With Verbose Output
+### With Debug Output
 
 ```bash
-python3 ercot_query.py --config queries/settlement_point_prices.json --verbose
+python3 ercot_query.py --config queries/realtime_lmp.json --debug
 ```
 
 ### What Happens When You Run It
@@ -179,18 +179,19 @@ python3 ercot_query.py --config queries/settlement_point_prices.json --verbose
 ERCOT Public API Query Tool
 ============================================================
 
-Configuration loaded from: queries/realtime_system_load.json
+Configuration loaded from: queries/settlement_point_prices.json
 Authenticating with ERCOT API...
 ✓ Authentication successful. Token valid until 2025-01-27 15:30:00
 
-Querying endpoint: /api/v1/actual_system_load
+Querying endpoint: np4-190-cd/dam_stlmnt_pnt_prices
 Parameters: {
-  "deliveryDateFrom": "2025-01-01",
-  "deliveryDateTo": "2025-01-27"
+  "deliveryDateFrom": "2025-01-20",
+  "deliveryDateTo": "2025-01-27",
+  "settlementPoint": "HB_HOUSTON"
 }
 ✓ Request successful (HTTP 200)
-✓ Data saved to: output/system_load_jan2025.json
-  File size: 45,678 bytes (44.61 KB)
+✓ Data saved to: output/dam_prices_houston.json
+  File size: 8,456 bytes (8.26 KB)
 
 ============================================================
 ✓ Query completed successfully!
@@ -204,21 +205,20 @@ To query a different endpoint or with different parameters:
 ### Option 1: Copy an Existing Configuration
 
 ```bash
-cp queries/realtime_system_load.json queries/my_new_query.json
+cp queries/settlement_point_prices.json queries/my_new_query.json
 ```
 
 Then edit `my_new_query.json`:
 
 ```json
 {
-  "endpoint": "/api/v1/your_new_endpoint",
+  "endpoint": "np4-190-cd/dam_stlmnt_pnt_prices",
   "parameters": {
     "deliveryDateFrom": "2025-01-15",
     "deliveryDateTo": "2025-01-20",
-    "customParameter1": "value1",
-    "customParameter2": "value2"
+    "settlementPoint": "HB_NORTH"
   },
-  "output_file": "output/my_custom_output.json"
+  "output_file": "output/dam_prices_north.json"
 }
 ```
 
@@ -228,14 +228,12 @@ Create a new file in the `queries/` directory with any parameters you need:
 
 ```json
 {
-  "endpoint": "/api/v1/dam_clearing_prices",
+  "endpoint": "np6-788-cd/lmp_node_zone_hub",
   "parameters": {
-    "deliveryDateFrom": "2025-01-01",
-    "deliveryDateTo": "2025-01-31",
-    "hourEnding": "12",
-    "marketType": "DAM"
+    "SCEDTimestampFrom": "2025-01-27T00:00:00",
+    "SCEDTimestampTo": "2025-01-27T23:59:59"
   },
-  "output_file": "output/dam_prices_january.json"
+  "output_file": "output/rtm_lmp_jan27.json"
 }
 ```
 
@@ -310,9 +308,9 @@ ercot-api-query/
 ├── README.md                   # This file
 │
 ├── queries/                    # Query configuration files
-│   ├── realtime_system_load.json
-│   ├── settlement_point_prices.json
-│   └── wind_power_production.json
+│   ├── settlement_point_prices.json   # DAM settlement prices
+│   ├── realtime_lmp.json              # Real-time LMP
+│   └── spp_15min.json                 # 15-minute SPP
 │
 ├── scripts/                    # Automated data collection scripts
 │   ├── daily_dam_settlement_prices.py  # Auto-collects DAM prices

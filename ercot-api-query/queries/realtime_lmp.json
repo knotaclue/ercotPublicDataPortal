@@ -1,0 +1,8 @@
+{
+  "endpoint": "np6-788-cd/lmp_node_zone_hub",
+  "parameters": {
+    "SCEDTimestampFrom": "2025-01-27T00:00:00",
+    "SCEDTimestampTo": "2025-01-27T23:59:59"
+  },
+  "output_file": "output/realtime_lmp_jan27.json"
+}
