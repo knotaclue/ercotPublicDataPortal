@@ -34,6 +34,7 @@ output/
 state/
 *.json
 !queries/*.json
+!discovered_endpoints*.json
 
 # Log files
 *.log

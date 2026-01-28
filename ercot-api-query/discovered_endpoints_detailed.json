@@ -1,0 +1,62 @@
+[
+  {
+    "endpoint_id": "np3-965-er",
+    "status_code": 200,
+    "exists": true,
+    "preview": "{\"emilId\":\"NP3-965-ER\",\"name\":\"60-Day SCED Disclosure Reports\",\"description\":\"This report will contain all 60 day disclosure data related to SCED. The following individual files are included in the re"
+  },
+  {
+    "endpoint_id": "np3-966-er",
+    "status_code": 200,
+    "exists": true,
+    "preview": "{\"emilId\":\"NP3-966-ER\",\"name\":\"60-Day DAM Disclosure Reports\",\"description\":\"This report will contain all 60 day disclosure data related to DAM. The following individual files are included in the repo"
+  },
+  {
+    "endpoint_id": "np4-33-cd",
+    "status_code": 200,
+    "exists": true,
+    "preview": "{\"emilId\":\"NP4-33-CD\",\"name\":\"DAM Ancillary Service Plan\",\"description\":\"Ancillary Service requirements by type and quantity for each hour of the current day plus the next 6 days\",\"status\":\"Active\",\"r"
+  },
+  {
+    "endpoint_id": "np4-183-cd",
+    "status_code": 200,
+    "exists": true,
+    "preview": "{\"emilId\":\"NP4-183-CD\",\"name\":\"DAM Hourly LMPs\",\"description\":\"The Hourly Locational Marginal Prices per electrical bus from the Day-Ahead Market for the last thirty days on a daily basis.\",\"status\":\""
+  },
+  {
+    "endpoint_id": "np4-190-cd",
+    "status_code": 200,
+    "exists": true,
+    "preview": "{\"emilId\":\"NP4-190-CD\",\"name\":\"DAM Settlement Point Prices\",\"description\":\"The Settlement Point Prices for all Resource Nodes, Load Zones, and Trading Hubs from the Day-Ahead Market.\",\"status\":\"Active"
+  },
+  {
+    "endpoint_id": "np4-732-cd",
+    "status_code": 200,
+    "exists": true,
+    "preview": "{\"emilId\":\"NP4-732-CD\",\"name\":\"Wind Power Production - Hourly Averaged Actual and Forecasted Values\",\"description\":\"This report is posted every hour and includes System-wide and regional actual hourly"
+  },
+  {
+    "endpoint_id": "np6-86-cd",
+    "status_code": 200,
+    "exists": true,
+    "preview": "{\"emilId\":\"NP6-86-CD\",\"name\":\"SCED Shadow Prices and Binding Transmission Constraints\",\"description\":\"The report for Shadow Prices of binding/violated constraints in SCED. The report shows the conting"
+  },
+  {
+    "endpoint_id": "np6-787-cd",
+    "status_code": 200,
+    "exists": true,
+    "preview": "{\"emilId\":\"NP6-787-CD\",\"name\":\"LMPs by Electrical Bus\",\"description\":\"The Locational Marginal Price for each Electrical Bus, normally produced by SCED every five minutes.\",\"status\":\"Active\",\"reportTyp"
+  },
+  {
+    "endpoint_id": "np6-788-cd",
+    "status_code": 200,
+    "exists": true,
+    "preview": "{\"emilId\":\"NP6-788-CD\",\"name\":\"LMPs by Resource Nodes, Load Zones and Trading Hubs\",\"description\":\"The Locational Marginal Price for each Settlement Point, normally produced by SCED every five minutes"
+  },
+  {
+    "endpoint_id": "np6-905-cd",
+    "status_code": 200,
+    "exists": true,
+    "preview": "{\"emilId\":\"NP6-905-CD\",\"name\":\"Settlement Point Prices at Resource Nodes, Hubs and Load Zones\",\"description\":\"Settlement Point Price for each Settlement Point, produced from SCED LMPs every 15 minutes"
+  }
+]
