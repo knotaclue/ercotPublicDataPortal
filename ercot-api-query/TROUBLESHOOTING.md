@@ -71,9 +71,9 @@ python3 ercot_query.py --config queries/myfile.json
 **Example of INVALID JSON**:
 ```json
 {
-  "endpoint": "/api/v1/test"
+  "endpoint": "np4-190-cd/dam_stlmnt_pnt_prices"
   "parameters": {  // ❌ Missing comma above
-    "date": "2025-01-01",  // ❌ Extra comma below
+    "deliveryDateFrom": "2025-01-01",  // ❌ Extra comma below
   }
 }
 ```
@@ -81,9 +81,9 @@ python3 ercot_query.py --config queries/myfile.json
 **Example of VALID JSON**:
 ```json
 {
-  "endpoint": "/api/v1/test",
+  "endpoint": "np4-190-cd/dam_stlmnt_pnt_prices",
   "parameters": {
-    "date": "2025-01-01"
+    "deliveryDateFrom": "2025-01-01"
   }
 }
 ```
@@ -97,17 +97,17 @@ python3 ercot_query.py --config queries/myfile.json
 **Cause**: Endpoint doesn't exist or URL is incorrect.
 
 **Solutions**:
-1. Verify the endpoint in ERCOT API documentation
+1. Verify the endpoint in ERCOT API documentation: https://apiexplorer.ercot.com/
 2. Check for typos in the endpoint path
-3. Ensure you're using the correct API version (e.g., `/api/v1/`)
+3. Ensure you're using the correct product ID format (e.g., `np4-190-cd`, `np6-788-cd`)
 
 **Example**:
 ```json
 // ❌ WRONG
-"endpoint": "/api/actual_system_load"
+"endpoint": "dam_settlement_prices"
 
 // ✅ CORRECT
-"endpoint": "/api/v1/actual_system_load"
+"endpoint": "np4-190-cd/dam_stlmnt_pnt_prices"
 ```
 
 ### ❌ "Request failed with status code: 400"

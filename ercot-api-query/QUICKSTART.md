@@ -60,19 +60,35 @@ python3 ercot_query.py --config queries/my_query.json
 - Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for common issues
 - Review example queries in the `queries/` directory
 
-## 🎯 Common Query Pattern
+## 🎯 Common Query Patterns
 
-All queries follow this simple pattern:
+### Day-Ahead Market Query
 
 ```json
 {
-  "endpoint": "/api/v1/your_endpoint",
+  "endpoint": "np4-190-cd/dam_stlmnt_pnt_prices",
   "parameters": {
-    "deliveryDateFrom": "2025-01-01",
-    "deliveryDateTo": "2025-01-27"
+    "deliveryDateFrom": "2025-01-20",
+    "deliveryDateTo": "2025-01-27",
+    "settlementPoint": "HB_HOUSTON"
   },
-  "output_file": "output/your_output.json"
+  "output_file": "output/dam_prices_houston.json"
+}
+```
+
+### Real-Time Market Query
+
+```json
+{
+  "endpoint": "np6-788-cd/lmp_node_zone_hub",
+  "parameters": {
+    "SCEDTimestampFrom": "2025-01-27T00:00:00",
+    "SCEDTimestampTo": "2025-01-27T23:59:59"
+  },
+  "output_file": "output/realtime_lmp.json"
 }
 ```
 
 That's it! Happy querying! 🚀
+
+**See [EXAMPLES.md](EXAMPLES.md) for more real endpoint examples!**

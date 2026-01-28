@@ -1,40 +1,17 @@
 # Examples and Use Cases
 
-This document provides practical examples of using the ERCOT API Query Tool for various data retrieval scenarios.
+This document provides practical examples of using the ERCOT API Query Tool for various data retrieval scenarios using real ERCOT Public Reports API endpoints.
 
 ## Basic Examples
 
-### Example 1: Query Real-Time System Load
+### Example 1: Day-Ahead Market Settlement Point Prices
 
-**Use Case**: Get actual system load data for a specific date range
-
-**Configuration** (`queries/realtime_system_load.json`):
-```json
-{
-  "endpoint": "/api/v1/actual_system_load",
-  "parameters": {
-    "deliveryDateFrom": "2025-01-01",
-    "deliveryDateTo": "2025-01-27"
-  },
-  "output_file": "output/system_load_jan2025.json"
-}
-```
-
-**Run**:
-```bash
-python3 ercot_query.py --config queries/realtime_system_load.json
-```
-
----
-
-### Example 2: Query Settlement Point Prices
-
-**Use Case**: Get hourly pricing data for a specific settlement point
+**Use Case**: Get DAM settlement point prices for a specific trading hub
 
 **Configuration** (`queries/settlement_point_prices.json`):
 ```json
 {
-  "endpoint": "/api/v1/settlement_point_prices",
+  "endpoint": "np4-190-cd/dam_stlmnt_pnt_prices",
   "parameters": {
     "deliveryDateFrom": "2025-01-20",
     "deliveryDateTo": "2025-01-27",
@@ -49,256 +26,373 @@ python3 ercot_query.py --config queries/realtime_system_load.json
 python3 ercot_query.py --config queries/settlement_point_prices.json
 ```
 
+**Available Settlement Points**: HB_NORTH, HB_SOUTH, HB_WEST, HB_HOUSTON, HB_BUSAVG, HB_PAN
+
 ---
 
-### Example 3: Query Wind Power Production
+### Example 2: Real-Time LMP by Settlement Point
 
-**Use Case**: Get wind generation data by region
+**Use Case**: Get real-time locational marginal prices for resource nodes, load zones, and trading hubs
 
-**Configuration** (`queries/wind_power_production.json`):
+**Configuration** (`queries/realtime_lmp.json`):
 ```json
 {
-  "endpoint": "/api/v1/wind_power_production",
+  "endpoint": "np6-788-cd/lmp_node_zone_hub",
   "parameters": {
-    "deliveryDateFrom": "2025-01-25",
-    "deliveryDateTo": "2025-01-27",
-    "region": "ERCOT"
+    "SCEDTimestampFrom": "2025-01-27T00:00:00",
+    "SCEDTimestampTo": "2025-01-27T23:59:59"
   },
-  "output_file": "output/wind_power_jan25-27.json"
+  "output_file": "output/realtime_lmp_jan27.json"
 }
 ```
 
 **Run**:
 ```bash
-python3 ercot_query.py --config queries/wind_power_production.json
+python3 ercot_query.py --config queries/realtime_lmp.json
+```
+
+**Note**: Real-time endpoints typically use `SCEDTimestamp` parameters instead of `deliveryDate`.
+
+---
+
+### Example 3: 15-Minute Settlement Point Prices (Real-Time)
+
+**Use Case**: Get real-time settlement point prices updated every 15 minutes
+
+**Configuration** (`queries/spp_15min.json`):
+```json
+{
+  "endpoint": "np6-905-cd/spp_node_zone_hub",
+  "parameters": {
+    "SCEDTimestampFrom": "2025-01-27T06:00:00",
+    "SCEDTimestampTo": "2025-01-27T18:00:00"
+  },
+  "output_file": "output/spp_15min_jan27.json"
+}
 ```
 
 ---
 
 ## Advanced Examples
 
-### Example 4: Day-Ahead Market Clearing Prices
+### Example 4: Day-Ahead Market Hourly LMP
 
-**Use Case**: Get DAM clearing prices for price analysis
+**Use Case**: Get hourly locational marginal prices from the day-ahead market
 
-**Configuration** (`queries/dam_clearing_prices.json`):
+**Configuration** (`queries/dam_hourly_lmp.json`):
 ```json
 {
-  "endpoint": "/api/v1/dam_clearing_prices",
+  "endpoint": "np4-183-cd/dam_hourly_lmp",
   "parameters": {
-    "deliveryDateFrom": "2025-01-01",
-    "deliveryDateTo": "2025-01-31",
-    "marketType": "DAM"
-  },
-  "output_file": "output/dam_prices_january_2025.json"
-}
-```
-
----
-
-### Example 5: Specific Hour Query
-
-**Use Case**: Get data for a specific hour of the day
-
-**Configuration** (`queries/peak_hour_prices.json`):
-```json
-{
-  "endpoint": "/api/v1/settlement_point_prices",
-  "parameters": {
-    "deliveryDateFrom": "2025-01-01",
-    "deliveryDateTo": "2025-01-31",
-    "hourEnding": "17",
-    "settlementPoint": "HB_HOUSTON"
-  },
-  "output_file": "output/houston_peak_hour_prices.json"
-}
-```
-
-**Note**: `hourEnding` 17 represents the 5 PM hour (peak demand time)
-
----
-
-### Example 6: Solar Power Production
-
-**Use Case**: Track solar generation across all regions
-
-**Configuration** (`queries/solar_production.json`):
-```json
-{
-  "endpoint": "/api/v1/solar_power_production",
-  "parameters": {
-    "deliveryDateFrom": "2025-01-01",
+    "deliveryDateFrom": "2025-01-27",
     "deliveryDateTo": "2025-01-31"
   },
-  "output_file": "output/solar_production_jan2025.json"
+  "output_file": "output/dam_hourly_lmp_jan2025.json"
 }
 ```
 
 ---
 
-### Example 7: Minimal Parameters (Let API Use Defaults)
+### Example 5: LMP by Electrical Bus
 
-**Use Case**: Query with minimum required parameters
+**Use Case**: Get locational marginal prices at specific electrical buses
 
-**Configuration** (`queries/minimal_query.json`):
+**Configuration** (`queries/lmp_electrical_bus.json`):
 ```json
 {
-  "endpoint": "/api/v1/actual_system_load",
+  "endpoint": "np6-787-cd/lmp_electrical_bus",
   "parameters": {
-    "deliveryDateFrom": "2025-01-27"
+    "SCEDTimestampFrom": "2025-01-27T00:00:00",
+    "SCEDTimestampTo": "2025-01-27T12:00:00"
   },
-  "output_file": "output/load_today.json"
+  "output_file": "output/lmp_electrical_bus_jan27.json"
 }
 ```
 
-**Note**: API will use defaults for parameters not specified
+**Note**: This endpoint provides more granular location-specific pricing data.
 
 ---
 
-### Example 8: Auto-Generated Output Filename
+### Example 6: Shadow Prices (Day-Ahead Market)
 
-**Use Case**: Let the script generate the output filename automatically
+**Use Case**: Get shadow prices for constraints in the day-ahead market
 
-**Configuration** (`queries/auto_filename.json`):
+**Configuration** (`queries/dam_shadow_prices.json`):
 ```json
 {
-  "endpoint": "/api/v1/wind_power_production",
+  "endpoint": "np4-191-cd/dam_shadow_prices",
+  "parameters": {
+    "deliveryDateFrom": "2025-01-20",
+    "deliveryDateTo": "2025-01-27"
+  },
+  "output_file": "output/dam_shadow_prices_jan2025.json"
+}
+```
+
+---
+
+### Example 7: Shadow Prices (SCED/Real-Time)
+
+**Use Case**: Get shadow prices for binding transmission constraints from SCED
+
+**Configuration** (`queries/sced_shadow_prices.json`):
+```json
+{
+  "endpoint": "np6-86-cd/shdw_prices_bnd_trns_const",
+  "parameters": {
+    "SCEDTimestampFrom": "2025-01-27T00:00:00",
+    "SCEDTimestampTo": "2025-01-27T23:59:59"
+  },
+  "output_file": "output/sced_shadow_prices_jan27.json"
+}
+```
+
+---
+
+### Example 8: DAM Generation Resource AS Offers
+
+**Use Case**: Get ancillary service offers from generation resources in the day-ahead market
+
+**Configuration** (`queries/dam_gen_as_offers.json`):
+```json
+{
+  "endpoint": "np3-966-er/60_dam_gen_res_as_offers",
   "parameters": {
     "deliveryDateFrom": "2025-01-27",
     "deliveryDateTo": "2025-01-27"
-  }
+  },
+  "output_file": "output/dam_gen_as_offers_jan27.json"
 }
 ```
 
-**Note**: `output_file` is omitted, so the script will create a filename like:
-`output/wind_power_production_20250127_143022.json`
+**Note**: This is a 60-day historical data endpoint.
+
+---
+
+### Example 9: Using Archive API for Bulk Downloads
+
+**Use Case**: Query archive metadata and download multiple files
+
+**Step 1 - Query Archive** (`queries/archive_query.json`):
+```json
+{
+  "endpoint": "archive/np6-788-cd",
+  "parameters": {
+    "postDatetimeFrom": "2025-01-20T00:00:00",
+    "postDatetimeTo": "2025-01-27T23:59:59"
+  },
+  "output_file": "output/archive_metadata_np6-788.json"
+}
+```
+
+**Step 2 - Download specific file**:
+```json
+{
+  "endpoint": "archive/np6-788-cd",
+  "parameters": {
+    "download": "1016533754"
+  },
+  "output_file": "output/np6-788-doc-1016533754.zip"
+}
+```
+
+**Note**: The archive API returns metadata with document IDs that can be used for downloads.
 
 ---
 
 ## Workflow Examples
 
-### Workflow 1: Daily Data Collection
+### Workflow 1: Daily Price Monitoring
 
-**Use Case**: Automate daily data collection with cron
+**Use Case**: Monitor prices across different markets daily
 
-**Create query** (`queries/daily_load.json`):
+**Create queries for each market**:
+
+**DAM Prices** (`queries/daily_dam_prices.json`):
 ```json
 {
-  "endpoint": "/api/v1/actual_system_load",
+  "endpoint": "np4-190-cd/dam_stlmnt_pnt_prices",
   "parameters": {
     "deliveryDateFrom": "2025-01-27",
-    "deliveryDateTo": "2025-01-27"
-  }
+    "deliveryDateTo": "2025-01-27",
+    "settlementPoint": "HB_HOUSTON"
+  },
+  "output_file": "output/daily/dam_houston_20250127.json"
+}
+```
+
+**Real-Time Prices** (`queries/daily_rtm_prices.json`):
+```json
+{
+  "endpoint": "np6-905-cd/spp_node_zone_hub",
+  "parameters": {
+    "SCEDTimestampFrom": "2025-01-27T00:00:00",
+    "SCEDTimestampTo": "2025-01-27T23:59:59"
+  },
+  "output_file": "output/daily/rtm_prices_20250127.json"
 }
 ```
 
 **Add to crontab**:
 ```bash
 # Run every day at 2 AM
-0 2 * * * cd /path/to/ercot-api-query && python3 ercot_query.py --config queries/daily_load.json
+0 2 * * * cd /path/to/ercot-api-query && python3 ercot_query.py --config queries/daily_dam_prices.json
+0 2 * * * cd /path/to/ercot-api-query && python3 ercot_query.py --config queries/daily_rtm_prices.json
 ```
 
 ---
 
-### Workflow 2: Compare Multiple Settlement Points
+### Workflow 2: Compare Hub Prices
 
-**Use Case**: Get prices for multiple locations
+**Use Case**: Compare prices across all trading hubs
 
-**Create separate configs** for each settlement point:
+**Create separate configs** for each hub:
 
-**queries/houston_prices.json**:
+**Houston Hub** (`queries/houston_prices.json`):
 ```json
 {
-  "endpoint": "/api/v1/settlement_point_prices",
+  "endpoint": "np4-190-cd/dam_stlmnt_pnt_prices",
   "parameters": {
     "deliveryDateFrom": "2025-01-20",
     "deliveryDateTo": "2025-01-27",
     "settlementPoint": "HB_HOUSTON"
   },
-  "output_file": "output/houston_prices.json"
+  "output_file": "output/hubs/houston_prices.json"
 }
 ```
 
-**queries/north_prices.json**:
+**North Hub** (`queries/north_prices.json`):
 ```json
 {
-  "endpoint": "/api/v1/settlement_point_prices",
+  "endpoint": "np4-190-cd/dam_stlmnt_pnt_prices",
   "parameters": {
     "deliveryDateFrom": "2025-01-20",
     "deliveryDateTo": "2025-01-27",
     "settlementPoint": "HB_NORTH"
   },
-  "output_file": "output/north_prices.json"
+  "output_file": "output/hubs/north_prices.json"
 }
 ```
 
-**Run both**:
+**Run all hubs**:
 ```bash
 python3 ercot_query.py --config queries/houston_prices.json
 python3 ercot_query.py --config queries/north_prices.json
+python3 ercot_query.py --config queries/west_prices.json
+python3 ercot_query.py --config queries/south_prices.json
 ```
 
 ---
 
-### Workflow 3: Batch Script for Multiple Queries
+### Workflow 3: Batch Script for Market Analysis
 
-**Use Case**: Run several queries in sequence
+**Use Case**: Collect comprehensive market data for analysis
 
-**Create bash script** (`run_all_queries.sh`):
+**Create bash script** (`run_market_analysis.sh`):
 ```bash
 #!/bin/bash
 
-echo "Running all ERCOT queries..."
+DATE=$(date +%Y-%m-%d)
+echo "Collecting market data for $DATE..."
 
-python3 ercot_query.py --config queries/realtime_system_load.json
-python3 ercot_query.py --config queries/settlement_point_prices.json
-python3 ercot_query.py --config queries/wind_power_production.json
-python3 ercot_query.py --config queries/solar_production.json
+# Day-Ahead Market data
+python3 ercot_query.py --config queries/dam_prices.json
+python3 ercot_query.py --config queries/dam_lmp.json
+python3 ercot_query.py --config queries/dam_shadow_prices.json
 
-echo "All queries completed!"
+# Real-Time Market data
+python3 ercot_query.py --config queries/rtm_lmp.json
+python3 ercot_query.py --config queries/rtm_spp.json
+python3 ercot_query.py --config queries/sced_shadow_prices.json
+
+echo "Market data collection completed!"
 ```
 
 **Make it executable and run**:
 ```bash
-chmod +x run_all_queries.sh
-./run_all_queries.sh
+chmod +x run_market_analysis.sh
+./run_market_analysis.sh
 ```
 
 ---
 
 ## Parameter Reference
 
-### Common Date Parameters
+### Day-Ahead Market Endpoints
 
+Most DAM endpoints use these parameters:
 ```json
 {
-  "deliveryDateFrom": "2025-01-01",  // Start date (inclusive)
-  "deliveryDateTo": "2025-01-31",    // End date (inclusive)
-  "hourEnding": "12"                  // Specific hour (1-24)
+  "deliveryDateFrom": "2025-01-01",  // Start date (YYYY-MM-DD)
+  "deliveryDateTo": "2025-01-31",    // End date (YYYY-MM-DD)
+  "hourEnding": "17",                 // Optional: Specific hour (1-24)
+  "settlementPoint": "HB_NORTH"      // Optional: Specific settlement point
 }
 ```
 
-### Common Location Parameters
+### Real-Time Market Endpoints
 
+Most RTM/SCED endpoints use these parameters:
 ```json
 {
-  "settlementPoint": "HB_NORTH",     // Settlement point name
-  "region": "ERCOT",                 // Region identifier
-  "zone": "LZ_HOUSTON"               // Load zone
+  "SCEDTimestampFrom": "2025-01-27T00:00:00",  // Start timestamp
+  "SCEDTimestampTo": "2025-01-27T23:59:59"     // End timestamp
 }
 ```
 
-### Common Filter Parameters
+### Archive Endpoints
 
+Archive queries use these parameters:
 ```json
 {
-  "marketType": "DAM",               // DAM (Day-Ahead Market)
-  "resourceType": "WIND",            // Resource type filter
-  "unit": "MW"                       // Unit of measurement
+  "postDatetimeFrom": "2025-01-20T00:00:00",  // When file was posted (from)
+  "postDatetimeTo": "2025-01-27T23:59:59",    // When file was posted (to)
+  "download": "1016533754"                     // Optional: Document ID to download
 }
 ```
 
-**Note**: Available parameters vary by endpoint. Always consult ERCOT API documentation for endpoint-specific parameters.
+### Common Settlement Points
+
+```
+HB_NORTH       - North Hub
+HB_SOUTH       - South Hub
+HB_WEST        - West Hub
+HB_HOUSTON     - Houston Hub
+HB_BUSAVG      - Bus Average Hub
+HB_PAN         - Panhandle Hub
+LZ_HOUSTON     - Houston Load Zone
+LZ_NORTH       - North Load Zone
+LZ_SOUTH       - South Load Zone
+LZ_WEST        - West Load Zone
+```
+
+---
+
+## Endpoint Categories
+
+### Pricing Endpoints
+
+**Day-Ahead Market:**
+- `np4-190-cd/dam_stlmnt_pnt_prices` - DAM Settlement Point Prices
+- `np4-183-cd/dam_hourly_lmp` - DAM Hourly LMP
+- `np4-191-cd/dam_shadow_prices` - DAM Shadow Prices
+
+**Real-Time Market:**
+- `np6-788-cd/lmp_node_zone_hub` - LMP by Node/Zone/Hub
+- `np6-905-cd/spp_node_zone_hub` - SPP (15-min intervals)
+- `np6-787-cd/lmp_electrical_bus` - LMP by Electrical Bus
+- `np6-86-cd/shdw_prices_bnd_trns_const` - SCED Shadow Prices
+
+### Resource/Generation Endpoints
+
+- `np3-965-er/60_sced_smne_gen_res` - SCED 60-Day Gen Resource
+- `np3-966-er/60_dam_gen_res_as_offers` - DAM Gen Resource AS Offers
+- `np3-966-er/60_dam_load_res_as_offers` - DAM Load Resource AS Offers
+
+### Archive Endpoints
+
+- `archive/{PRODUCT_ID}` - Query archive metadata
+- `archive/{PRODUCT_ID}?download={docId}` - Download specific file
 
 ---
 
@@ -308,75 +402,111 @@ chmod +x run_all_queries.sh
 
 **Good Practice**:
 ```json
-// Query one week at a time
+// Query one week at a time for detailed data
 "deliveryDateFrom": "2025-01-20",
 "deliveryDateTo": "2025-01-27"
 ```
 
 **Avoid**:
 ```json
-// Querying entire years may timeout or return too much data
+// Large date ranges may timeout or exceed API limits
 "deliveryDateFrom": "2024-01-01",
 "deliveryDateTo": "2024-12-31"
 ```
 
-### 2. File Organization
+### 2. Real-Time vs Day-Ahead Parameters
 
-Organize output files by date or category:
+**Day-Ahead** endpoints use `deliveryDate`:
+```json
+"deliveryDateFrom": "2025-01-27",
+"deliveryDateTo": "2025-01-27"
+```
+
+**Real-Time** endpoints use `SCEDTimestamp`:
+```json
+"SCEDTimestampFrom": "2025-01-27T00:00:00",
+"SCEDTimestampTo": "2025-01-27T23:59:59"
+```
+
+### 3. File Organization
+
+Organize output files by market and date:
 
 ```json
-"output_file": "output/2025/january/system_load.json"
-"output_file": "output/prices/houston/jan20-jan27.json"
+"output_file": "output/2025/january/dam/settlement_prices.json"
+"output_file": "output/2025/january/rtm/lmp_realtime.json"
 ```
 
-### 3. Descriptive Filenames
+### 4. Testing Queries
 
-Use clear, descriptive output filenames:
-
-```json
-// ✅ Good
-"output_file": "output/houston_settlement_prices_jan2025.json"
-
-// ❌ Less clear
-"output_file": "output/data.json"
-```
-
-### 4. Query Naming Convention
-
-Name your query files descriptively:
-
-```
-queries/
-├── daily_system_load.json
-├── houston_prices_hourly.json
-├── wind_production_weekly.json
-└── solar_production_monthly.json
-```
-
----
-
-## Testing Your Queries
-
-Before running production queries, test with a small date range:
+Always test with a small date range first:
 
 ```json
 {
-  "endpoint": "/api/v1/actual_system_load",
+  "endpoint": "np6-788-cd/lmp_node_zone_hub",
   "parameters": {
-    "deliveryDateFrom": "2025-01-27",
-    "deliveryDateTo": "2025-01-27"  // Just one day
+    "SCEDTimestampFrom": "2025-01-27T12:00:00",
+    "SCEDTimestampTo": "2025-01-27T13:00:00"  // Just one hour
   },
-  "output_file": "output/test_load.json"
+  "output_file": "output/test_lmp.json"
 }
 ```
 
-Once confirmed working, expand the date range as needed.
+### 5. Using Debug Mode
+
+For troubleshooting, use the `--debug` flag:
+
+```bash
+python3 ercot_query.py --config queries/your_query.json --debug
+```
+
+This shows:
+- Authentication details
+- Full request headers
+- Complete API responses
+- Token information
+
+---
+
+## Common Use Cases
+
+### Energy Trader
+- Monitor DAM and RTM prices across hubs
+- Track shadow prices for constraint analysis
+- Download historical price data for modeling
+
+### Grid Analyst
+- Analyze LMP patterns by location
+- Study constraint impacts via shadow prices
+- Compare DAM forecasts vs RTM actuals
+
+### Renewable Developer
+- Track hub prices for project economics
+- Monitor congestion through shadow prices
+- Analyze historical price patterns
+
+### Researcher
+- Access historical market data
+- Study price formation mechanisms
+- Analyze market efficiency
 
 ---
 
 ## Need More Examples?
 
-- Check the ERCOT API documentation for all available endpoints
-- Review the `queries/` directory for included examples
-- See TROUBLESHOOTING.md for common issues
+- **API Documentation**: https://apiexplorer.ercot.com/
+- **Data Products**: https://www.ercot.com/mp/data-products
+- **Support**: https://apiexplorer.ercot.com/support
+- Check TROUBLESHOOTING.md for common issues
 - Read README.md for complete documentation
+
+---
+
+## Sources
+
+This documentation uses real ERCOT Public Reports API endpoints. For the most up-to-date endpoint information:
+
+- [ERCOT API Explorer](https://apiexplorer.ercot.com/)
+- [ERCOT Public API Applications](https://www.ercot.com/services/mdt/data-portal)
+- [ERCOT Developer Portal](https://developer.ercot.com/applications/pubapi/user-guide/using-api/)
+- [ERCOT Data Products](https://www.ercot.com/mp/data-products)

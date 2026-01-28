@@ -290,26 +290,50 @@ pip3 install -r requirements.txt
 ## 📚 API Documentation
 
 For complete ERCOT Public Data Portal API documentation, visit:
-- **API Portal**: https://data.ercot.com
-- **Developer Docs**: https://developer.ercot.com (check for latest endpoints and parameters)
+- **API Portal**: https://apiexplorer.ercot.com/
+- **Developer Docs**: https://developer.ercot.com/applications/pubapi/user-guide/using-api/
+- **Data Products**: https://www.ercot.com/mp/data-products
 
 ### Common Endpoints
 
-Here are some commonly used ERCOT API endpoints (verify current endpoints in ERCOT documentation):
+Here are commonly used ERCOT Public Reports API endpoints:
 
-- `/api/v1/actual_system_load` - Real-time system load
-- `/api/v1/settlement_point_prices` - Settlement point pricing
-- `/api/v1/wind_power_production` - Wind generation data
-- `/api/v1/solar_power_production` - Solar generation data
-- `/api/v1/dam_clearing_prices` - Day-ahead market clearing prices
-- `/api/v1/sced_system_lambda` - System-wide offer prices
+**Day-Ahead Market (DAM):**
+- `np4-190-cd/dam_stlmnt_pnt_prices` - DAM Settlement Point Prices
+- `np4-183-cd/dam_hourly_lmp` - DAM Hourly LMP
+- `np4-191-cd/dam_shadow_prices` - DAM Shadow Prices
+
+**Real-Time Market (RTM):**
+- `np6-788-cd/lmp_node_zone_hub` - LMP by Settlement Point (Real-Time)
+- `np6-905-cd/spp_node_zone_hub` - Settlement Point Prices (15-min intervals)
+- `np6-787-cd/lmp_electrical_bus` - LMP by Electrical Bus
+- `np6-86-cd/shdw_prices_bnd_trns_const` - SCED Shadow Prices
+
+**Resource/Generation:**
+- `np3-965-er/60_sced_smne_gen_res` - SCED 60-Day Gen Resource
+- `np3-966-er/60_dam_gen_res_as_offers` - DAM Gen Resource AS Offers
+
+**Archive:**
+- `archive/{PRODUCT_ID}` - Query archive metadata and download files
 
 ### Common Parameters
 
-Most endpoints accept these parameters:
+**Day-Ahead Market endpoints:**
 - `deliveryDateFrom` - Start date (YYYY-MM-DD format)
 - `deliveryDateTo` - End date (YYYY-MM-DD format)
-- Additional parameters vary by endpoint (check API docs)
+- `settlementPoint` - Settlement point name (e.g., HB_NORTH, HB_HOUSTON)
+- `hourEnding` - Specific hour (1-24)
+
+**Real-Time Market endpoints:**
+- `SCEDTimestampFrom` - Start timestamp (YYYY-MM-DDTHH:MM:SS format)
+- `SCEDTimestampTo` - End timestamp (YYYY-MM-DDTHH:MM:SS format)
+
+**Archive endpoints:**
+- `postDatetimeFrom` - File post date start
+- `postDatetimeTo` - File post date end
+- `download` - Document ID for download
+
+**Note**: Available parameters vary by endpoint. See EXAMPLES.md for detailed usage.
 
 ## 🔐 Security Notes
 
