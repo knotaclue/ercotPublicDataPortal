@@ -228,6 +228,57 @@ python3 ercot_query.py --config queries/my_new_query.json
 
 **That's it!** No Python code changes needed.
 
+## 🤖 Automated Data Collection
+
+For regular data collection, use the automated scripts in the `scripts/` directory. These scripts automatically calculate the previous day's date range and are designed to run via cron.
+
+### Available Automated Scripts
+
+**Daily DAM Settlement Prices**:
+```bash
+# Collect yesterday's DAM settlement prices for Houston Hub
+python3 scripts/daily_dam_settlement_prices.py --settlement-point HB_HOUSTON
+
+# For other hubs: HB_NORTH, HB_SOUTH, HB_WEST, HB_BUSAVG, HB_PAN
+```
+
+**Daily Real-Time LMP**:
+```bash
+# Collect yesterday's real-time LMP data
+python3 scripts/daily_rtm_lmp.py
+```
+
+**Daily 15-Minute Settlement Point Prices**:
+```bash
+# Collect yesterday's 15-minute SPP data
+python3 scripts/daily_spp_15min.py
+```
+
+### Setting Up Cron (Run Daily at 1 AM)
+
+Edit your crontab:
+```bash
+crontab -e
+```
+
+Add entries:
+```bash
+# Collect DAM prices daily at 1 AM
+0 1 * * * cd /path/to/ercot-api-query && python3 scripts/daily_dam_settlement_prices.py
+
+# Collect RTM LMP daily at 1:15 AM
+15 1 * * * cd /path/to/ercot-api-query && python3 scripts/daily_rtm_lmp.py
+```
+
+### How It Works
+
+- Scripts automatically calculate yesterday's date (midnight to 11:59 PM)
+- Data is organized by year/month: `output/daily/dam/2025/01/settlement_prices_HB_HOUSTON_2025-01-27.json`
+- Exit codes indicate success (0) or failure (non-zero) for monitoring
+- Use `--debug` flag for troubleshooting
+
+See [scripts/README.md](scripts/README.md) for complete documentation and more examples.
+
 ## 📁 Project Structure
 
 ```
@@ -244,9 +295,20 @@ ercot-api-query/
 │   ├── settlement_point_prices.json
 │   └── wind_power_production.json
 │
+├── scripts/                    # Automated data collection scripts
+│   ├── daily_dam_settlement_prices.py  # Auto-collects DAM prices
+│   ├── daily_rtm_lmp.py               # Auto-collects RTM LMP
+│   ├── daily_spp_15min.py             # Auto-collects 15-min SPP
+│   ├── TEMPLATE_daily_collector.py    # Template for new scripts
+│   ├── setup_cron_example.sh          # Cron setup examples
+│   └── README.md                       # Scripts documentation
+│
 └── output/                     # API responses saved here (created automatically)
-    ├── system_load_jan2025.json
-    └── ...
+    ├── daily/                  # Automated collections (organized by date)
+    │   ├── dam/2025/01/
+    │   ├── rtm/2025/01/
+    │   └── spp/2025/01/
+    └── ...                     # Manual query outputs
 ```
 
 ## 🔧 Troubleshooting
