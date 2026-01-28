@@ -36,6 +36,9 @@ state/
 !queries/*.json
 !discovered_endpoints*.json
 
+# Auto-generated query files (run discover_endpoints.py to regenerate)
+queries/discovered/
+
 # Log files
 *.log
 

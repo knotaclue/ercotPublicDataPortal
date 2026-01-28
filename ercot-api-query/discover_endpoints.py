@@ -2,8 +2,8 @@
 """
 ERCOT API Endpoint Discovery Script
 
-This script authenticates to the ERCOT API and discovers all available endpoints
-by querying the API directly and parsing responses.
+This script authenticates to the ERCOT API and discovers all available endpoints,
+then creates query configuration files for each endpoint with basic parameters.
 """
 
 import os
@@ -12,6 +12,7 @@ import json
 import requests
 from pathlib import Path
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
 import re
 
 # Load environment variables
@@ -95,65 +96,8 @@ def discover_base_endpoints(access_token, subscription_key):
         return []
 
 
-def test_endpoint_pattern(access_token, subscription_key, endpoint_id):
-    """Test if a specific endpoint pattern exists."""
-    url = f"{BASE_API_URL}/{endpoint_id}"
-
-    headers = {
-        "Authorization": f"Bearer {access_token}",
-        "Ocp-Apim-Subscription-Key": subscription_key,
-        "Accept": "application/json"
-    }
-
-    try:
-        response = requests.get(url, headers=headers, timeout=5)
-
-        # 200 = success, 400 = exists but needs parameters
-        if response.status_code in [200, 400]:
-            return {
-                "endpoint_id": endpoint_id,
-                "status_code": response.status_code,
-                "exists": True,
-                "preview": str(response.text[:200]) if response.text else ""
-            }
-        else:
-            return {"endpoint_id": endpoint_id, "exists": False}
-
-    except Exception as e:
-        return {"endpoint_id": endpoint_id, "exists": False, "error": str(e)}
-
-
-def discover_by_pattern(access_token, subscription_key):
-    """Discover endpoints by testing known patterns."""
-    print("\nMethod 2: Testing known endpoint patterns...")
-    print("(This may take a few moments...)")
-
-    # Known endpoint patterns based on documentation
-    known_patterns = [
-        # NP3 series
-        "np3-965-er", "np3-966-er",
-        # NP4 series
-        "np4-33-cd", "np4-183-cd", "np4-190-cd", "np4-191-cd", "np4-732-cd",
-        # NP6 series
-        "np6-86-cd", "np6-787-cd", "np6-788-cd", "np6-905-cd", "np6-970-cd",
-    ]
-
-    discovered = []
-
-    for pattern in known_patterns:
-        result = test_endpoint_pattern(access_token, subscription_key, pattern)
-
-        if result.get("exists"):
-            print(f"  ✓ Found: {pattern} (HTTP {result['status_code']})")
-            discovered.append(result)
-        else:
-            print(f"  ✗ Not found: {pattern}")
-
-    return discovered
-
-
-def get_endpoint_details(access_token, subscription_key, endpoint_id):
-    """Try to get detailed information about an endpoint."""
+def get_endpoint_metadata(access_token, subscription_key, endpoint_id):
+    """Query endpoint to get its metadata and parameter information."""
     url = f"{BASE_API_URL}/{endpoint_id}"
 
     headers = {
@@ -165,60 +109,167 @@ def get_endpoint_details(access_token, subscription_key, endpoint_id):
     try:
         response = requests.get(url, headers=headers, timeout=10)
 
+        metadata = {
+            "endpoint_id": endpoint_id,
+            "status_code": response.status_code,
+            "exists": response.status_code in [200, 400]
+        }
+
         if response.status_code == 200:
-            return response.json()
+            data = response.json()
+            metadata["data"] = data
+            metadata["fields"] = data.get("fields", [])
+
         elif response.status_code == 400:
-            # Endpoint exists but needs parameters
-            error_data = response.json()
-            return {
-                "endpoint_id": endpoint_id,
-                "status": "requires_parameters",
-                "error_message": error_data
-            }
-        else:
-            return {"endpoint_id": endpoint_id, "status": "unknown"}
+            # Endpoint exists but needs parameters - parse the error message
+            try:
+                error_data = response.json()
+                metadata["error_data"] = error_data
+
+                # Try to extract parameter names from error message
+                error_msg = json.dumps(error_data)
+
+                # Look for common parameter patterns
+                metadata["uses_delivery_date"] = "deliveryDate" in error_msg
+                metadata["uses_sced_timestamp"] = "SCEDTimestamp" in error_msg
+                metadata["uses_post_datetime"] = "postDatetime" in error_msg
+
+            except:
+                pass
+
+        return metadata
 
     except Exception as e:
-        return {"endpoint_id": endpoint_id, "error": str(e)}
+        return {
+            "endpoint_id": endpoint_id,
+            "exists": False,
+            "error": str(e)
+        }
 
 
-def scrape_api_explorer():
-    """Attempt to scrape endpoint list from API Explorer page."""
-    print("\nMethod 3: Scraping API Explorer page...")
+def detect_parameter_type(metadata):
+    """Detect what type of date/time parameters the endpoint uses."""
+    endpoint_id = metadata.get("endpoint_id", "")
 
-    explorer_url = "https://apiexplorer.ercot.com/api-details#api=pubapi-apim-api"
+    # Check if metadata has explicit parameter info
+    if metadata.get("uses_sced_timestamp"):
+        return "SCED"
+    elif metadata.get("uses_delivery_date"):
+        return "DAM"
+    elif metadata.get("uses_post_datetime"):
+        return "ARCHIVE"
 
-    try:
-        response = requests.get(explorer_url, timeout=10)
+    # Check fields if available
+    fields = metadata.get("fields", [])
+    for field in fields:
+        field_name = field.get("name", "").lower()
+        if "scedtimestamp" in field_name:
+            return "SCED"
+        elif "deliverydate" in field_name:
+            return "DAM"
+        elif "postdatetime" in field_name:
+            return "ARCHIVE"
 
-        if response.status_code == 200:
-            # Look for endpoint patterns in HTML
-            endpoints = re.findall(r'np[0-9]-[0-9]+-[a-z]+(?:/[a-z_0-9]+)?', response.text)
+    # Fallback to endpoint naming convention
+    # NP4 are typically DAM, NP6 are typically RTM/SCED
+    if endpoint_id.startswith("np4"):
+        return "DAM"
+    elif endpoint_id.startswith("np6"):
+        return "SCED"
+    elif "archive" in endpoint_id.lower():
+        return "ARCHIVE"
 
-            if endpoints:
-                unique_endpoints = sorted(set(endpoints))
-                print(f"✓ Found {len(unique_endpoints)} endpoint references in HTML")
-                return unique_endpoints
-            else:
-                print("⚠ No endpoints found in HTML (may require JavaScript rendering)")
-                return []
-        else:
-            print(f"⚠ API Explorer returned status {response.status_code}")
-            return []
+    # Default to DAM for unknown
+    return "DAM"
 
-    except Exception as e:
-        print(f"✗ Error scraping API Explorer: {e}")
-        return []
+
+def create_query_config(endpoint_id, parameter_type):
+    """Create a query configuration JSON for an endpoint."""
+    # Calculate date ranges (yesterday)
+    yesterday = datetime.now() - timedelta(days=1)
+
+    config = {
+        "endpoint": endpoint_id,
+        "parameters": {},
+        "output_file": f"output/discovered/{endpoint_id.replace('-', '_')}.json"
+    }
+
+    if parameter_type == "DAM":
+        # Day-Ahead Market uses deliveryDate (YYYY-MM-DD)
+        date_str = yesterday.strftime('%Y-%m-%d')
+        config["parameters"]["deliveryDateFrom"] = date_str
+        config["parameters"]["deliveryDateTo"] = date_str
+
+    elif parameter_type == "SCED":
+        # Real-Time/SCED uses SCEDTimestamp (YYYY-MM-DDTHH:MM:SS)
+        timestamp_from = yesterday.replace(hour=0, minute=0, second=0).strftime('%Y-%m-%dT%H:%M:%S')
+        timestamp_to = yesterday.replace(hour=23, minute=59, second=59).strftime('%Y-%m-%dT%H:%M:%S')
+        config["parameters"]["SCEDTimestampFrom"] = timestamp_from
+        config["parameters"]["SCEDTimestampTo"] = timestamp_to
+
+    elif parameter_type == "ARCHIVE":
+        # Archive uses postDatetime
+        timestamp_from = yesterday.replace(hour=0, minute=0, second=0).strftime('%Y-%m-%dT%H:%M:%S')
+        timestamp_to = yesterday.replace(hour=23, minute=59, second=59).strftime('%Y-%m-%dT%H:%M:%S')
+        config["parameters"]["postDatetimeFrom"] = timestamp_from
+        config["parameters"]["postDatetimeTo"] = timestamp_to
+
+    return config
+
+
+def create_query_files(endpoints_metadata):
+    """Create query configuration files for all discovered endpoints."""
+    print("\nCreating query configuration files...")
+
+    # Create output directory
+    queries_dir = Path("queries/discovered")
+    queries_dir.mkdir(parents=True, exist_ok=True)
+
+    created_count = 0
+    skipped_count = 0
+
+    for metadata in endpoints_metadata:
+        if not metadata.get("exists"):
+            skipped_count += 1
+            continue
+
+        endpoint_id = metadata["endpoint_id"]
+        parameter_type = detect_parameter_type(metadata)
+
+        # Create query config
+        query_config = create_query_config(endpoint_id, parameter_type)
+
+        # Add metadata comment
+        query_config["_metadata"] = {
+            "endpoint_id": endpoint_id,
+            "parameter_type": parameter_type,
+            "discovered_at": datetime.now().isoformat(),
+            "note": "Auto-generated query configuration. Adjust parameters as needed."
+        }
+
+        # Save to file
+        filename = queries_dir / f"{endpoint_id.replace('-', '_')}.json"
+        with open(filename, 'w') as f:
+            json.dump(query_config, f, indent=2)
+
+        print(f"  ✓ Created: {filename.name} ({parameter_type})")
+        created_count += 1
+
+    print(f"\n✓ Created {created_count} query files")
+    print(f"  Skipped {skipped_count} non-working endpoints")
+    print(f"  Location: {queries_dir}/")
+
+    return created_count
 
 
 def save_results(discovered_endpoints, detailed_info):
     """Save discovery results to files."""
-    print("\nSaving results...")
+    print("\nSaving discovery results...")
 
     # Save unique endpoint IDs
     with open("discovered_endpoints.json", "w") as f:
         json.dump({
-            "discovered_at": str(Path.cwd()),
+            "discovered_at": datetime.now().isoformat(),
             "total_endpoints": len(discovered_endpoints),
             "endpoints": discovered_endpoints
         }, f, indent=2)
@@ -239,7 +290,7 @@ def save_results(discovered_endpoints, detailed_info):
 def main():
     """Main discovery process."""
     print("=" * 60)
-    print("ERCOT API Endpoint Discovery")
+    print("ERCOT API Endpoint Discovery & Query Generator")
     print("=" * 60)
     print()
 
@@ -255,45 +306,61 @@ def main():
     if not access_token:
         sys.exit(1)
 
-    all_discovered = []
-    detailed_info = []
+    # Step 2: Discover endpoints
+    print("\nDiscovering endpoints...")
+    all_discovered = discover_base_endpoints(access_token, subscription_key)
 
-    # Step 2: Discover from base API
-    base_endpoints = discover_base_endpoints(access_token, subscription_key)
-    all_discovered.extend(base_endpoints)
+    if not all_discovered:
+        print("✗ No endpoints discovered")
+        sys.exit(1)
 
-    # Step 3: Test known patterns
-    pattern_results = discover_by_pattern(access_token, subscription_key)
-    for result in pattern_results:
-        if result["endpoint_id"] not in all_discovered:
-            all_discovered.append(result["endpoint_id"])
-    detailed_info.extend(pattern_results)
+    # Step 3: Get metadata for each endpoint
+    print("\nGetting endpoint metadata...")
+    print("(This will take a few moments...)")
 
-    # Step 4: Scrape API Explorer
-    explorer_endpoints = scrape_api_explorer()
-    for endpoint in explorer_endpoints:
-        # Extract just the base endpoint ID (before the /)
-        base_endpoint = endpoint.split('/')[0]
-        if base_endpoint not in all_discovered:
-            all_discovered.append(base_endpoint)
+    detailed_metadata = []
+    for i, endpoint_id in enumerate(all_discovered, 1):
+        print(f"  [{i}/{len(all_discovered)}] Querying {endpoint_id}...", end=" ")
 
-    # Remove duplicates and sort
-    all_discovered = sorted(set(all_discovered))
+        metadata = get_endpoint_metadata(access_token, subscription_key, endpoint_id)
+        detailed_metadata.append(metadata)
 
-    # Save results
-    save_results(all_discovered, detailed_info)
+        if metadata.get("exists"):
+            param_type = detect_parameter_type(metadata)
+            print(f"✓ ({param_type})")
+        else:
+            print("✗ (unavailable)")
+
+    # Step 4: Create query configuration files
+    query_count = create_query_files(detailed_metadata)
+
+    # Step 5: Save discovery results
+    save_results(all_discovered, detailed_metadata)
 
     # Summary
     print()
     print("=" * 60)
     print("Discovery Summary")
     print("=" * 60)
-    print(f"Total unique endpoints discovered: {len(all_discovered)}")
+    print(f"Total endpoints discovered: {len(all_discovered)}")
+    print(f"Query files created: {query_count}")
     print()
-    print("Discovered endpoints:")
-    for endpoint in all_discovered:
-        print(f"  • {endpoint}")
+
+    # Count by parameter type
+    dam_count = sum(1 for m in detailed_metadata if m.get("exists") and detect_parameter_type(m) == "DAM")
+    sced_count = sum(1 for m in detailed_metadata if m.get("exists") and detect_parameter_type(m) == "SCED")
+    archive_count = sum(1 for m in detailed_metadata if m.get("exists") and detect_parameter_type(m) == "ARCHIVE")
+
+    print(f"Parameter Types:")
+    print(f"  • DAM (deliveryDate): {dam_count} endpoints")
+    print(f"  • SCED (SCEDTimestamp): {sced_count} endpoints")
+    print(f"  • ARCHIVE (postDatetime): {archive_count} endpoints")
     print()
+    print("=" * 60)
+    print()
+    print("Query files location: queries/discovered/")
+    print("You can now run any query with:")
+    print("  python3 ercot_query.py --config queries/discovered/ENDPOINT.json")
     print("=" * 60)
 
 
