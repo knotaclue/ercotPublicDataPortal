@@ -2,6 +2,8 @@
 
 Get up and running with the ERCOT API Query Tool in 5 minutes!
 
+> **📚 New to this tool?** Check out [USAGE_GUIDE.md](USAGE_GUIDE.md) to learn about the three different ways to use this tool (manual queries, daily collection, and incremental polling).
+
 ## 1️⃣ Install Dependencies
 
 ```bash

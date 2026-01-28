@@ -5,6 +5,7 @@ A Python 3 tool for querying the ERCOT Public Data Portal API with automatic tok
 ## 📋 Table of Contents
 
 - [Overview](#overview)
+- [Three Ways to Use This Tool](#-three-ways-to-use-this-tool)
 - [Features](#features)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
@@ -25,6 +26,24 @@ Key benefits:
 - **Secure**: Credentials stored in `.env` file (never committed to git)
 - **Automatic token management**: Refreshes authentication tokens as needed
 - **Flexible**: Supports any endpoint and parameter combination
+
+## 🎯 Three Ways to Use This Tool
+
+This tool supports three different usage scenarios:
+
+1. **📝 Manual/Ad-Hoc Queries** - One-time data retrieval with custom date ranges
+2. **📅 Daily Collection** - Automatic previous day data collection (runs once daily at 1 AM)
+3. **🔄 Incremental Polling** - Continuous real-time collection (runs every 15 minutes)
+
+**→ [Read the Complete USAGE_GUIDE.md](USAGE_GUIDE.md) to choose the right approach for your needs!**
+
+### Quick Summary
+
+| Scenario | When to Use | How Often | Example |
+|----------|-------------|-----------|---------|
+| **Manual** | Research, custom date ranges | On-demand | "Get Houston DAM prices for Jan 15-20" |
+| **Daily** | Daily reports, compliance archives | Once per day | "Collect yesterday's data every morning" |
+| **Incremental** | Live dashboards, real-time monitoring | Every 15 min | "Track prices as they're published" |
 
 ## ✨ Features
 

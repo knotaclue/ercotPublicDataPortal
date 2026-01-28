@@ -2,6 +2,8 @@
 
 This directory contains Python scripts for automated, intelligent data collection from the ERCOT API.
 
+> **📚 Looking for usage guidance?** See [USAGE_GUIDE.md](../USAGE_GUIDE.md) for a complete comparison of all three usage scenarios (manual queries, daily collection, and incremental polling) with examples and decision guides.
+
 **Two Types of Collection:**
 1. **Daily Scripts** - Collect previous day's complete data (run once daily at 1 AM)
 2. **Incremental Scripts** - Collect only new data since last poll (run every 15 minutes)
