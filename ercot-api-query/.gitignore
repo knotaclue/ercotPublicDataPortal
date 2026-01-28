@@ -26,8 +26,12 @@ ENV/
 *~
 .DS_Store
 
-# Output files (you may want to commit these, so adjust as needed)
+# Claude Code files
+.claude/
+
+# Output files and runtime state
 output/
+state/
 *.json
 !queries/*.json
 
