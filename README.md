@@ -192,7 +192,7 @@ Then edit `my_new_query.json`:
 
 ```json
 {
-  "endpoint": "/api/v1/your_new_endpoint",
+  "endpoint": "/np3-906-ex/2day_agg_sced_as_offers_nspin",
   "parameters": {
     "deliveryDateFrom": "2025-01-15",
     "deliveryDateTo": "2025-01-20",
@@ -209,7 +209,7 @@ Create a new file in the `queries/` directory with any parameters you need:
 
 ```json
 {
-  "endpoint": "/api/v1/dam_clearing_prices",
+  "endpoint": "/np3-906-ex/2day_agg_sced_as_offers_nspin",
   "parameters": {
     "deliveryDateFrom": "2025-01-01",
     "deliveryDateTo": "2025-01-31",
