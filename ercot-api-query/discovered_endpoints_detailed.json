@@ -1365,68 +1365,8 @@
   },
   {
     "endpoint_id": "np3-915-ex",
-    "status_code": 200,
-    "exists": true,
-    "data": {
-      "emilId": "NP3-915-EX",
-      "name": "3-Day DAM Highest Price AS Offer Selected",
-      "description": "This report provides the offer price and the name of the Entity submitting the offer for the highest-priced Ancillary Service (AS) Offer selected in the Day-Ahead Market (DAM) for each AS three days after the end of the applicable Operating Day.  If multiple Entities submitted the highest-priced offers selected, all Entities shall be identified.",
-      "status": "Active",
-      "reportTypeId": 13018,
-      "audience": "Public",
-      "generationFrequency": "Chron - Daily",
-      "securityClassification": "Public",
-      "lastUpdated": "2025-08-28",
-      "firstRun": "2011-01-29",
-      "eceii": "",
-      "channel": "Public,EWS",
-      "userGuide": null,
-      "postingType": "Report",
-      "market": "Nodal",
-      "extractSubscriber": "",
-      "xsdName": "",
-      "misPostingLocation": "",
-      "certificateRole": "",
-      "fileType": "zip,csv",
-      "ddlName": "",
-      "misDisplayDuration": 31,
-      "archiveDuration": 2555,
-      "notificationType": "",
-      "contentType": "DATA",
-      "downloadLimit": 1000,
-      "lastPostDatetime": "2026-01-28T03:19:14",
-      "bundle": 1,
-      "protocolRules": {
-        "NP3.2.5(10)": "https://www.ercot.com/mp/data-products?protocolRules=NP3.2.5(10)",
-        "PUC Substantive Rule \u00a725.506": "https://www.ercot.com/mp/data-products?protocolRules=PUC Substantive Rule \u00a725.506"
-      },
-      "artifacts": [
-        {
-          "reportTypeId": 13018,
-          "displayName": "3-Day DAM Highest Price AS Offer Selected",
-          "_links": {
-            "endpoint": {
-              "href": "https://api.ercot.com/api/public-reports/np3-915-ex/3d_dam_high_as_offers"
-            }
-          }
-        }
-      ],
-      "_links": {
-        "self": {
-          "href": "https://api.ercot.com/api/public-reports/np3-915-ex"
-        },
-        "parent": {
-          "href": "https://api.ercot.com/api/public-reports"
-        },
-        "archive": {
-          "href": "https://api.ercot.com/api/public-reports/archive/np3-915-ex"
-        },
-        "bundle": {
-          "href": "https://api.ercot.com/api/public-reports/bundle/np3-915-ex"
-        }
-      }
-    },
-    "fields": []
+    "status_code": 429,
+    "exists": false
   },
   {
     "endpoint_id": "np3-965-er",
@@ -1555,8 +1495,186 @@
   },
   {
     "endpoint_id": "np3-966-er",
-    "status_code": 429,
-    "exists": false
+    "status_code": 200,
+    "exists": true,
+    "data": {
+      "emilId": "NP3-966-ER",
+      "name": "60-Day DAM Disclosure Reports",
+      "description": "This report will contain all 60 day disclosure data related to DAM. The following individual files are included in the report: 60d_DAM_EnergyBidAwards; 60d_DAM_EnergyBids; 60d_DAM_EnergyOnlyOfferAwards; 60d_DAM_EnergyOnlyOffers; 60d_DAM_Generation_Resource_ASOffers; 60d_DAM_Gen_Resource_Data; 60d_DAM_Load_Resource_ASOffers; 60d_DAM_Load_Resource_Data; 60d_DAM_PTPObligationBidAwards; 60d_DAM_PTPObligationBids; 60d_DAM_PTP_Obligation_Option; 60d_DAM_PTP_Obligation_OptionAwards; and 60d_DAM_QSE_Self_Arranged_AS.",
+      "status": "Active",
+      "reportTypeId": 13051,
+      "audience": "Public",
+      "generationFrequency": "Chron - Daily",
+      "securityClassification": "Public",
+      "lastUpdated": "2024-11-11",
+      "firstRun": "2011-01-29",
+      "eceii": "",
+      "channel": "Public,EWS,Data Portal",
+      "userGuide": null,
+      "postingType": "Report",
+      "market": "Nodal",
+      "extractSubscriber": "",
+      "xsdName": "",
+      "misPostingLocation": "",
+      "certificateRole": "",
+      "fileType": "zip,csv",
+      "ddlName": "",
+      "misDisplayDuration": 1462,
+      "archiveDuration": 2555,
+      "notificationType": "",
+      "contentType": "DATA",
+      "downloadLimit": 25,
+      "lastPostDatetime": "2026-01-28T05:49:01",
+      "bundle": 1,
+      "protocolRules": {
+        "NP3.2.5(11)(d)": "https://www.ercot.com/mp/data-products?protocolRules=NP3.2.5(11)(d)",
+        "NP3.2.5(11)(c)": "https://www.ercot.com/mp/data-products?protocolRules=NP3.2.5(11)(c)",
+        "NP3.2.5(11)(b)": "https://www.ercot.com/mp/data-products?protocolRules=NP3.2.5(11)(b)",
+        "NP3.2.5(11)(a)": "https://www.ercot.com/mp/data-products?protocolRules=NP3.2.5(11)(a)",
+        "NP3.2.5(11)(k)": "https://www.ercot.com/mp/data-products?protocolRules=NP3.2.5(11)(k)",
+        "NP3.2.5(11)(j)": "https://www.ercot.com/mp/data-products?protocolRules=NP3.2.5(11)(j)",
+        "NP3.2.5(4)(e)": "https://www.ercot.com/mp/data-products?protocolRules=NP3.2.5(4)(e)",
+        "NP3.2.5(11)(i)": "https://www.ercot.com/mp/data-products?protocolRules=NP3.2.5(11)(i)",
+        "NP3.2.5(11)(h)": "https://www.ercot.com/mp/data-products?protocolRules=NP3.2.5(11)(h)",
+        "NP3.2.5(11)(g)": "https://www.ercot.com/mp/data-products?protocolRules=NP3.2.5(11)(g)",
+        "NP3.2.5(11)(f)": "https://www.ercot.com/mp/data-products?protocolRules=NP3.2.5(11)(f)",
+        "NP3.2.5(11)(e)": "https://www.ercot.com/mp/data-products?protocolRules=NP3.2.5(11)(e)"
+      },
+      "artifacts": [
+        {
+          "reportTypeId": 13051,
+          "displayName": "60-Day DAM Energy Offer Only Awards",
+          "_links": {
+            "endpoint": {
+              "href": "https://api.ercot.com/api/public-reports/np3-966-er/60_dam_energy_only_offer_awards"
+            }
+          }
+        },
+        {
+          "reportTypeId": 13051,
+          "displayName": "60-Day DAM Energy Bids",
+          "_links": {
+            "endpoint": {
+              "href": "https://api.ercot.com/api/public-reports/np3-966-er/60_dam_energy_bids"
+            }
+          }
+        },
+        {
+          "reportTypeId": 13051,
+          "displayName": "60-Day DAM Energy Bid Awards",
+          "_links": {
+            "endpoint": {
+              "href": "https://api.ercot.com/api/public-reports/np3-966-er/60_dam_energy_bid_awards"
+            }
+          }
+        },
+        {
+          "reportTypeId": 13051,
+          "displayName": "60-Day DAM PTP Obligation Option",
+          "_links": {
+            "endpoint": {
+              "href": "https://api.ercot.com/api/public-reports/np3-966-er/60_dam_ptp_obl_opt"
+            }
+          }
+        },
+        {
+          "reportTypeId": 13051,
+          "displayName": "60-Day DAM QSE Self Arranged AS",
+          "_links": {
+            "endpoint": {
+              "href": "https://api.ercot.com/api/public-reports/np3-966-er/60_dam_qse_self_as"
+            }
+          }
+        },
+        {
+          "reportTypeId": 13051,
+          "displayName": "60-Day DAM PTP Obligation Bid Awards",
+          "_links": {
+            "endpoint": {
+              "href": "https://api.ercot.com/api/public-reports/np3-966-er/60_dam_ptp_obl_bid_awards"
+            }
+          }
+        },
+        {
+          "reportTypeId": 13051,
+          "displayName": "60-Day DAM Load Resources AS Offers",
+          "_links": {
+            "endpoint": {
+              "href": "https://api.ercot.com/api/public-reports/np3-966-er/60_dam_load_res_as_offers"
+            }
+          }
+        },
+        {
+          "reportTypeId": 13051,
+          "displayName": "60-Day DAM Generation Resource Data",
+          "_links": {
+            "endpoint": {
+              "href": "https://api.ercot.com/api/public-reports/np3-966-er/60_dam_gen_res_data"
+            }
+          }
+        },
+        {
+          "reportTypeId": 13051,
+          "displayName": "60-Day DAM Load Resource Data",
+          "_links": {
+            "endpoint": {
+              "href": "https://api.ercot.com/api/public-reports/np3-966-er/60_dam_load_res_data"
+            }
+          }
+        },
+        {
+          "reportTypeId": 13051,
+          "displayName": "60-Day DAM PTP Obligation Option Awards",
+          "_links": {
+            "endpoint": {
+              "href": "https://api.ercot.com/api/public-reports/np3-966-er/60_dam_ptp_obl_opt_awards"
+            }
+          }
+        },
+        {
+          "reportTypeId": 13051,
+          "displayName": "60-Day DAM PTP Obligation Bids",
+          "_links": {
+            "endpoint": {
+              "href": "https://api.ercot.com/api/public-reports/np3-966-er/60_dam_ptp_obl_bids"
+            }
+          }
+        },
+        {
+          "reportTypeId": 13051,
+          "displayName": "60-Day DAM Energy Only Offers",
+          "_links": {
+            "endpoint": {
+              "href": "https://api.ercot.com/api/public-reports/np3-966-er/60_dam_energy_only_offers"
+            }
+          }
+        },
+        {
+          "reportTypeId": 13051,
+          "displayName": "60-Day DAM Generation Resources AS Offers",
+          "_links": {
+            "endpoint": {
+              "href": "https://api.ercot.com/api/public-reports/np3-966-er/60_dam_gen_res_as_offers"
+            }
+          }
+        }
+      ],
+      "_links": {
+        "self": {
+          "href": "https://api.ercot.com/api/public-reports/np3-966-er"
+        },
+        "parent": {
+          "href": "https://api.ercot.com/api/public-reports"
+        },
+        "archive": {
+          "href": "https://api.ercot.com/api/public-reports/archive/np3-966-er"
+        },
+        "bundle": {
+          "href": "https://api.ercot.com/api/public-reports/bundle/np3-966-er"
+        }
+      }
+    },
+    "fields": []
   },
   {
     "endpoint_id": "np3-987-ex",
@@ -1789,88 +1907,24 @@
   },
   {
     "endpoint_id": "np3-991-ex",
-    "status_code": 200,
-    "exists": true,
-    "data": {
-      "emilId": "NP3-991-EX",
-      "name": "60-Day COP All Updates",
-      "description": "This report will contain all iterative Current Operating Plan (COP) submissions where a change has occurred for the operating day. Previously named 60-Day Current Operating Plan.",
-      "status": "Active",
-      "reportTypeId": 15943,
-      "audience": "Public",
-      "generationFrequency": "Chron - Daily",
-      "securityClassification": "Public",
-      "lastUpdated": "2024-09-17",
-      "firstRun": "2019-02-07",
-      "eceii": "",
-      "channel": "Public,EWS,Data Portal",
-      "userGuide": null,
-      "postingType": "Report",
-      "market": "Nodal",
-      "extractSubscriber": "",
-      "xsdName": "",
-      "misPostingLocation": "",
-      "certificateRole": "",
-      "fileType": "zip,csv",
-      "ddlName": "",
-      "misDisplayDuration": 1462,
-      "archiveDuration": 2555,
-      "notificationType": "",
-      "contentType": "DATA",
-      "downloadLimit": 25,
-      "lastPostDatetime": "2026-01-28T05:19:01",
-      "bundle": 1,
-      "protocolRules": {
-        "NP1.3.1.4(2) (c)": "https://www.ercot.com/mp/data-products?protocolRules=NP1.3.1.4(2) (c)"
-      },
-      "artifacts": [
-        {
-          "reportTypeId": 15943,
-          "displayName": "60-Day COP All Updates",
-          "_links": {
-            "endpoint": {
-              "href": "https://api.ercot.com/api/public-reports/np3-991-ex/60_cop_all_updates"
-            }
-          }
-        }
-      ],
-      "_links": {
-        "self": {
-          "href": "https://api.ercot.com/api/public-reports/np3-991-ex"
-        },
-        "parent": {
-          "href": "https://api.ercot.com/api/public-reports"
-        },
-        "archive": {
-          "href": "https://api.ercot.com/api/public-reports/archive/np3-991-ex"
-        },
-        "bundle": {
-          "href": "https://api.ercot.com/api/public-reports/bundle/np3-991-ex"
-        }
-      }
-    },
-    "fields": []
-  },
-  {
-    "endpoint_id": "np4-159-cd",
     "status_code": 429,
     "exists": false
   },
   {
-    "endpoint_id": "np4-179-cd",
+    "endpoint_id": "np4-159-cd",
     "status_code": 200,
     "exists": true,
     "data": {
-      "emilId": "NP4-179-CD",
-      "name": "Total Ancillary Service Offers",
-      "description": "The total quantity in MW of Offers per Ancillary Service per hour from the Day-Ahead Market for the last thirty days on a daily basis which includes the following AS types: REGDN, REGUP, RRSPFR, RRSFFR, RRSUFR, NSPIN, ECRSS & ECRSM. Report removed with PR447-03 RTC.  Link to remain available until postings have expired.",
+      "emilId": "NP4-159-CD",
+      "name": "Load Distribution Factors",
+      "description": "Load forecast distribution factors from which Market Participants can calculate Load at the Electrical Bus level by hour for the next seven days after a change in values.  A seasonal or manual change in values triggers the posting of the report.",
       "status": "Active",
-      "reportTypeId": 12327,
+      "reportTypeId": 12324,
       "audience": "Public",
-      "generationFrequency": "Event - Per DAM Run",
+      "generationFrequency": "Event - As Needed",
       "securityClassification": "Public",
-      "lastUpdated": "2025-10-01",
-      "firstRun": "2010-11-29",
+      "lastUpdated": "2024-07-10",
+      "firstRun": "2010-11-23",
       "eceii": "",
       "channel": "Public,EWS,Data Portal",
       "userGuide": null,
@@ -1882,43 +1936,45 @@
       "certificateRole": "",
       "fileType": "zip,csv,xml",
       "ddlName": "",
-      "misDisplayDuration": 31,
+      "misDisplayDuration": 365,
       "archiveDuration": 2555,
       "notificationType": "",
       "contentType": "DATA",
-      "downloadLimit": 1000,
-      "lastPostDatetime": "2025-12-31T23:59:59",
-      "bundle": 1,
+      "downloadLimit": 5,
+      "lastPostDatetime": "2025-10-29T14:21:33",
+      "bundle": 0,
       "protocolRules": {
-        "NP4.5.3(2)(e)": "https://www.ercot.com/mp/data-products?protocolRules=NP4.5.3(2)(e)"
+        "NP6.3.2(5)": "https://www.ercot.com/mp/data-products?protocolRules=NP6.3.2(5)"
       },
       "artifacts": [
         {
-          "reportTypeId": 12327,
-          "displayName": "Total Ancillary Service Offers",
+          "reportTypeId": 12324,
+          "displayName": "Load Distribution Factors",
           "_links": {
             "endpoint": {
-              "href": "https://api.ercot.com/api/public-reports/np4-179-cd/total_as_service_offers"
+              "href": "https://api.ercot.com/api/public-reports/np4-159-cd/load_distribution_factors"
             }
           }
         }
       ],
       "_links": {
         "self": {
-          "href": "https://api.ercot.com/api/public-reports/np4-179-cd"
+          "href": "https://api.ercot.com/api/public-reports/np4-159-cd"
         },
         "parent": {
           "href": "https://api.ercot.com/api/public-reports"
         },
         "archive": {
-          "href": "https://api.ercot.com/api/public-reports/archive/np4-179-cd"
-        },
-        "bundle": {
-          "href": "https://api.ercot.com/api/public-reports/bundle/np4-179-cd"
+          "href": "https://api.ercot.com/api/public-reports/archive/np4-159-cd"
         }
       }
     },
     "fields": []
+  },
+  {
+    "endpoint_id": "np4-179-cd",
+    "status_code": 429,
+    "exists": false
   },
   {
     "endpoint_id": "np4-183-cd",
@@ -2050,26 +2106,21 @@
   },
   {
     "endpoint_id": "np4-19-cd",
-    "status_code": 429,
-    "exists": false
-  },
-  {
-    "endpoint_id": "np4-190-cd",
     "status_code": 200,
     "exists": true,
     "data": {
-      "emilId": "NP4-190-CD",
-      "name": "DAM Settlement Point Prices",
-      "description": "The Settlement Point Prices for all Resource Nodes, Load Zones, and Trading Hubs from the Day-Ahead Market.",
+      "emilId": "NP4-19-CD",
+      "name": "DAM Aggregated Ancillary Service Offer Curve",
+      "description": "The Day-Ahead Market (DAM) Aggregated Ancillary Service Offer Curve for the last 30 days which includes the following AS types: REGDN, REGUP, RRSPF, RRSFF, RRSUF, NSPIN, NSPNM, ECRSS, & ECRSM. Previously named Aggregated Ancillary Service Offer Curve.",
       "status": "Active",
-      "reportTypeId": 12331,
+      "reportTypeId": 12330,
       "audience": "Public",
       "generationFrequency": "Event - Per DAM Run",
       "securityClassification": "Public",
-      "lastUpdated": "2024-07-10",
+      "lastUpdated": "2025-11-17",
       "firstRun": "2010-11-29",
       "eceii": "",
-      "channel": "Public,EWS,Data Portal",
+      "channel": "Public,EWS",
       "userGuide": null,
       "postingType": "Report",
       "market": "Nodal",
@@ -2083,39 +2134,44 @@
       "archiveDuration": 2555,
       "notificationType": "",
       "contentType": "DATA",
-      "downloadLimit": 500,
-      "lastPostDatetime": "2026-01-28T12:32:28",
+      "downloadLimit": 50,
+      "lastPostDatetime": "2026-01-28T12:34:13",
       "bundle": 1,
       "protocolRules": {
-        "NP4.5.3(2)(b)": "https://www.ercot.com/mp/data-products?protocolRules=NP4.5.3(2)(b)"
+        "NP4.5.3(2)(g)": "https://www.ercot.com/mp/data-products?protocolRules=NP4.5.3(2)(g)"
       },
       "artifacts": [
         {
-          "reportTypeId": 12331,
-          "displayName": "DAM Settlement Point Prices",
+          "reportTypeId": 12330,
+          "displayName": "DAM Aggregated Ancillary Service Offer Curve",
           "_links": {
             "endpoint": {
-              "href": "https://api.ercot.com/api/public-reports/np4-190-cd/dam_stlmnt_pnt_prices"
+              "href": "https://api.ercot.com/api/public-reports/np4-19-cd/dam_agg_as_offer_curve"
             }
           }
         }
       ],
       "_links": {
         "self": {
-          "href": "https://api.ercot.com/api/public-reports/np4-190-cd"
+          "href": "https://api.ercot.com/api/public-reports/np4-19-cd"
         },
         "parent": {
           "href": "https://api.ercot.com/api/public-reports"
         },
         "archive": {
-          "href": "https://api.ercot.com/api/public-reports/archive/np4-190-cd"
+          "href": "https://api.ercot.com/api/public-reports/archive/np4-19-cd"
         },
         "bundle": {
-          "href": "https://api.ercot.com/api/public-reports/bundle/np4-190-cd"
+          "href": "https://api.ercot.com/api/public-reports/bundle/np4-19-cd"
         }
       }
     },
     "fields": []
+  },
+  {
+    "endpoint_id": "np4-190-cd",
+    "status_code": 429,
+    "exists": false
   },
   {
     "endpoint_id": "np4-191-cd",
@@ -2650,19 +2706,80 @@
   },
   {
     "endpoint_id": "np4-442-cd",
+    "status_code": 429,
+    "exists": false
+  },
+  {
+    "endpoint_id": "np4-494-er",
     "status_code": 200,
     "exists": true,
     "data": {
-      "emilId": "NP4-442-CD",
-      "name": "Hourly System-wide and Regional Wind Forecasts by Model",
-      "description": "This report is posted every hour and includes system-wide and regional STWPF and WGRPP values produced by each forecast model for On-Line WGRs and the wind generation components of DC-Coupled Resources for the rolling historical 48-hour period and the rolling future 168-hour period and also indicates which forecast model is used for each region to populate COPs.  Previously named:  Hourly System-wide and Regional STWPF and WGRPP by Forecast Model.  Name change with implementation of PR373-01 FPP.",
+      "emilId": "NP4-494-ER",
+      "name": "Exceptional Fuel Cost Submission Report",
+      "description": "The day following an Operating Day for which an Exceptional Fuel Cost is submitted, ERCOT shall post a report on the ERCOT website indicating the affected Operating Hours and the number of Resources for which a QSE submitted Exceptional Fuel Cost for a particular Operating Day.",
       "status": "Active",
-      "reportTypeId": 19385,
+      "reportTypeId": 24276,
       "audience": "Public",
-      "generationFrequency": "Chron - Hourly",
+      "generationFrequency": "Chron - Daily",
       "securityClassification": "Public",
-      "lastUpdated": "2025-03-10",
-      "firstRun": "2020-08-05",
+      "lastUpdated": "2024-07-10",
+      "firstRun": "2024-06-27",
+      "eceii": "",
+      "channel": "Public,EWS",
+      "userGuide": null,
+      "postingType": "Report",
+      "market": "Nodal",
+      "extractSubscriber": "",
+      "xsdName": "",
+      "misPostingLocation": "",
+      "certificateRole": "",
+      "fileType": "xlsx",
+      "ddlName": "",
+      "misDisplayDuration": 365,
+      "archiveDuration": 2555,
+      "notificationType": "",
+      "contentType": "BINARY",
+      "downloadLimit": 365,
+      "lastPostDatetime": "2023-12-11T00:00:00",
+      "bundle": 0,
+      "protocolRules": {
+        "NP4.4.9.4.1(1)(h)": "https://www.ercot.com/mp/data-products?protocolRules=NP4.4.9.4.1(1)(h)"
+      },
+      "artifacts": [],
+      "_links": {
+        "self": {
+          "href": "https://api.ercot.com/api/public-reports/np4-494-er"
+        },
+        "parent": {
+          "href": "https://api.ercot.com/api/public-reports"
+        },
+        "archive": {
+          "href": "https://api.ercot.com/api/public-reports/archive/np4-494-er"
+        }
+      }
+    },
+    "fields": []
+  },
+  {
+    "endpoint_id": "np4-523-cd",
+    "status_code": 429,
+    "exists": false
+  },
+  {
+    "endpoint_id": "np4-532-cd",
+    "status_code": 200,
+    "exists": true,
+    "data": {
+      "emilId": "NP4-532-CD",
+      "name": "DAM Total Ancillary Services Sold",
+      "description": "Ancillary Services sold in the DAM consisting of the total quantity of awarded Resource-Specific Ancillary Service Offers and Ancillary Service Only Offers, for each Ancillary Service for each hour of the Operating Day.",
+      "status": "Active",
+      "reportTypeId": 24888,
+      "audience": "Public",
+      "generationFrequency": "Event - Per DAM Run",
+      "securityClassification": "Public",
+      "lastUpdated": "2025-08-07",
+      "firstRun": "2025-12-05",
       "eceii": "",
       "channel": "Public,EWS",
       "userGuide": null,
@@ -2672,60 +2789,45 @@
       "xsdName": "Current Day Reports XSD",
       "misPostingLocation": "",
       "certificateRole": "",
-      "fileType": "csv,xml,zip",
+      "fileType": "zip,csv,xml",
       "ddlName": "",
-      "misDisplayDuration": 7,
+      "misDisplayDuration": 31,
       "archiveDuration": 2555,
       "notificationType": "",
       "contentType": "DATA",
-      "downloadLimit": 250,
-      "lastPostDatetime": "2026-01-28T16:55:00",
+      "downloadLimit": 365,
+      "lastPostDatetime": "2026-01-28T12:32:28",
       "bundle": 1,
       "protocolRules": {
-        "NP4.2.2(6)": "https://www.ercot.com/mp/data-products?protocolRules=NP4.2.2(6)"
+        "NP4.5.3(2)(k)": "https://www.ercot.com/mp/data-products?protocolRules=NP4.5.3(2)(k)"
       },
       "artifacts": [
         {
-          "reportTypeId": 19385,
-          "displayName": "Hourly System-wide and Regional Wind Forecasts by Model",
+          "reportTypeId": 24888,
+          "displayName": "DAM Total Ancillary Services Sold",
           "_links": {
             "endpoint": {
-              "href": "https://api.ercot.com/api/public-reports/np4-442-cd/hrly_sys_reg_wind_fcast_model"
+              "href": "https://api.ercot.com/api/public-reports/np4-532-cd/dam_as_sold"
             }
           }
         }
       ],
       "_links": {
         "self": {
-          "href": "https://api.ercot.com/api/public-reports/np4-442-cd"
+          "href": "https://api.ercot.com/api/public-reports/np4-532-cd"
         },
         "parent": {
           "href": "https://api.ercot.com/api/public-reports"
         },
         "archive": {
-          "href": "https://api.ercot.com/api/public-reports/archive/np4-442-cd"
+          "href": "https://api.ercot.com/api/public-reports/archive/np4-532-cd"
         },
         "bundle": {
-          "href": "https://api.ercot.com/api/public-reports/bundle/np4-442-cd"
+          "href": "https://api.ercot.com/api/public-reports/bundle/np4-532-cd"
         }
       }
     },
     "fields": []
-  },
-  {
-    "endpoint_id": "np4-494-er",
-    "status_code": 429,
-    "exists": false
-  },
-  {
-    "endpoint_id": "np4-523-cd",
-    "status_code": 429,
-    "exists": false
-  },
-  {
-    "endpoint_id": "np4-532-cd",
-    "status_code": 429,
-    "exists": false
   },
   {
     "endpoint_id": "np4-732-cd",
