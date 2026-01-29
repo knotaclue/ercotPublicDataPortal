@@ -1,0 +1,8 @@
+{
+  "endpoint": "np6-905-cd/spp_node_zone_hub",
+  "parameters": {
+    "SCEDTimestampFrom": "2025-01-27T06:00:00",
+    "SCEDTimestampTo": "2025-01-27T18:00:00"
+  },
+  "output_file": "output/spp_15min_jan27.json"
+}

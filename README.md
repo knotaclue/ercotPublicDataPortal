@@ -192,7 +192,7 @@ Then edit `my_new_query.json`:
 
 ```json
 {
-  "endpoint": "/api/v1/your_new_endpoint",
+  "endpoint": "/np3-906-ex/2day_agg_sced_as_offers_nspin",
   "parameters": {
     "deliveryDateFrom": "2025-01-15",
     "deliveryDateTo": "2025-01-20",
@@ -209,7 +209,7 @@ Create a new file in the `queries/` directory with any parameters you need:
 
 ```json
 {
-  "endpoint": "/api/v1/dam_clearing_prices",
+  "endpoint": "/np3-906-ex/2day_agg_sced_as_offers_nspin",
   "parameters": {
     "deliveryDateFrom": "2025-01-01",
     "deliveryDateTo": "2025-01-31",
@@ -293,17 +293,6 @@ For complete ERCOT Public Data Portal API documentation, visit:
 - **API Portal**: https://data.ercot.com
 - **Developer Docs**: https://developer.ercot.com (check for latest endpoints and parameters)
 
-### Common Endpoints
-
-Here are some commonly used ERCOT API endpoints (verify current endpoints in ERCOT documentation):
-
-- `/api/v1/actual_system_load` - Real-time system load
-- `/api/v1/settlement_point_prices` - Settlement point pricing
-- `/api/v1/wind_power_production` - Wind generation data
-- `/api/v1/solar_power_production` - Solar generation data
-- `/api/v1/dam_clearing_prices` - Day-ahead market clearing prices
-- `/api/v1/sced_system_lambda` - System-wide offer prices
-
 ### Common Parameters
 
 Most endpoints accept these parameters:
@@ -324,17 +313,7 @@ Feel free to submit issues, fork the repository, and create pull requests for an
 
 ## 📄 License
 
-[Add your license here]
-
-## 👤 Author
-
-[Your name]
-
-## 🙏 Acknowledgments
-
-- ERCOT for providing the Public Data Portal API
-- Python requests library
-- python-dotenv for environment variable management
+This project is licensed under the MIT License.
 
 ---
 
